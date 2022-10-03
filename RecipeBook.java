@@ -5,19 +5,21 @@ public class RecipeBook {
   private static Scanner scanner = new Scanner(System.in);
 
   public static void printIntro() {
-    System.out.println("\n-----------------------------------------\n");
-    System.out.println("What would you like to do? Enter a number:");
+    System.out.println("-----------------------------------------");
+    System.out.println("What would you like to do?");
     System.out.println("1 - Add a recipe");
     System.out.println("2 - Search for a recipe");
     System.out.println("3 - View all recipes");
     System.out.println("4 - Exit");
-    System.out.println("\n-----------------------------------------\n");
+    System.out.println("-----------------------------------------\n");
+    System.out.print("Enter a number: ");
   }
 
   public static void main(String[] args) {
+    System.out.println("-----------------------------------------");
     System.out.println("Welcome to your recipe book!");
 
-    // TODO: REMOVE THIS - USED FOR DEBUG/TESTING
+    // TODO: REMOVE THIS - USED FOR DEBUG/TESTING (Preloaded Recipes)
     preloadedRecipes();
 
     while (true) {
@@ -25,41 +27,63 @@ public class RecipeBook {
       try {
 
         int val = Integer.parseInt(scanner.nextLine());
-        System.out.println("Value entered was " + val);
-        // TODO: Add a recipe
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+
+        // Display value entered (DEBUG)
+        // System.out.println("Value entered was " + val);
+
+        // Add a recipe
         if (val == 1) {
           addRecipe();
         }
+
         // TODO: Search for a recipe
         else if (val == 2) {
-
           // ask user if they want to view recipe info
-          System.out.println("Would you like to view this recipe? (yes/no) ");
+          System.out.println("What would like to search for?");
           String recipeDetails = scanner.nextLine();
-          if (recipeDetails.equalsIgnoreCase("yes")) {
-            // showRecipeInfo(name);
-          }
-
         }
-        // TODO: View all recipes
+
+        // View all recipes
         else if (val == 3) {
           showAll();
-          System.out.println(
-              "Would you like to view a recipe's details? (yes/no) ");
+          System.out.print("Would you like to view a recipe's details? (Y/N) ");
           String recipeDetails = scanner.nextLine();
-          if (recipeDetails.equalsIgnoreCase("yes")) {
-            System.out.println(
-                "Please enter the recipe's corresponding number: ");
+          System.out.println();
+
+          // User accepts view
+          if (recipeDetails.equalsIgnoreCase("Y") ||
+              recipeDetails.equalsIgnoreCase("Yes")) {
+            System.out.print("Enter the recipe's corresponding number: ");
             int rec_num = Integer.parseInt(scanner.nextLine());
 
             for (Recipe x : book) {
               if (x.number == rec_num) {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+                System.out.println("Viewing recipe: " + x.name);
                 showRecipeInfo(x.name);
               }
             }
           }
 
+          // User declines view
+          else if (recipeDetails.equalsIgnoreCase("N") ||
+                   recipeDetails.equalsIgnoreCase("No")) {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+          }
+
+          // Return Home
+          else {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            System.out.println(
+                "That is not a valid option, returning to home.");
+          }
         }
+
         // Exit
         else if (val == 4) {
           System.exit(0);
@@ -67,10 +91,12 @@ public class RecipeBook {
 
         else {
           System.out.println(
-              "That is not a valid option please try again.\n\n");
+              "That is not a valid option, please try again.\n");
         }
-      } catch (Exception e) {
-        System.out.println("That is not a valid option please try again.\n\n");
+      }
+
+      catch (Exception e) {
+        System.out.println("That is not a valid option, please try again.\n");
       }
     }
   }
@@ -98,7 +124,13 @@ public class RecipeBook {
       Recipe r = new Recipe(name, description, ingredients, instructionsArray,
                             (current_num + 1));
       if (book.add(r)) {
-        System.out.println("The recipe on " + name + " has been added!");
+        System.out.println();
+        System.out.println("The recipe " + name + " has been added!");
+        System.out.println();
+        System.out.print("Press any key to continue: ");
+        scanner.nextLine();
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
       } else {
         System.out.println("Issue adding recipe. Please try again later.");
       }
@@ -122,51 +154,81 @@ public class RecipeBook {
         "spaghetti, butter, ground black pepper, grated pecorino or parmesan",
         instructions, 1);
     book.add(r);
-    Recipe r2 = new Recipe("cake2", "popular dessert", "eggs2, butter2",
-                           instructions2, 2);
+    Recipe r2 =
+        new Recipe("Cake 2", "Ice Cream", "eggs2, butter2", instructions2, 2);
     book.add(r2);
-    Recipe r3 = new Recipe("cake3", "popular dessert", "eggs3, butter3",
-                           instructions3, 3);
+    Recipe r3 =
+        new Recipe("Cake 3", "Mochi", "eggs3, butter3", instructions3, 3);
     book.add(r3);
   }
 
   private static void showAll() {
+    System.out.println("-----------------------------------------");
+
+    System.out.println("Recipes: ");
     for (Recipe x : book) {
       System.out.println(x);
     }
+
+    System.out.println("-----------------------------------------\n");
   }
 
   private static void showRecipeInfo(String name) {
-    System.out.println("Please choose how you would like to view the recipe.");
-    System.out.println(
-        "Enter 0 to view the recipe in its entirety or enter 1 to view the recipe's instructions step-by-step: ");
+    System.out.println();
+    System.out.println("-----------------------------------------------");
+    System.out.println("Choose how you would like to view the recipe:");
+    System.out.println("0 - View the recipe in its' entirety");
+    System.out.println("1 -  View the recipe's instructions step-by-step");
+    System.out.println("-----------------------------------------------");
+    System.out.print("Enter your viewing choice: ");
     int view_choice = Integer.parseInt(scanner.nextLine());
+    System.out.println("-----------------------------------------------");
+
     if (view_choice == 0) {
       for (Recipe x : book) {
         if (name.equalsIgnoreCase(x.name)) {
           System.out.println("Name: " + x.name);
+          System.out.println();
           System.out.println("Description: " + x.description);
+          System.out.println();
           System.out.println("Ingredients: " + x.ingredients);
+          System.out.println();
           System.out.println("Instructions:");
           for (String instr : x.instructions) {
-            System.out.println(instr);
+            System.out.println("• " + instr);
           }
         }
       }
-    } else if (view_choice == 1) {
+      System.out.println();
+      System.out.print("Press any key to continue: ");
+      scanner.nextLine();
+      System.out.print("\033[H\033[2J");
+      System.out.flush();
+    }
+
+    else if (view_choice == 1) {
+      System.out.print("\033[H\033[2J");
+      System.out.flush();
+      System.out.println("Viewing recipe: " + name);
+      System.out.println("-----------------------------------------------");
 
       System.out.println(
-          "Instructions: (Please hit enter to see next instruction) \n");
+          "Instructions: (Press any key to continue)");
       for (Recipe x : book) {
         if (name.equalsIgnoreCase(x.name)) {
           int instr_count = 1;
           for (String instr : x.instructions) {
             System.out.println(instr_count + ". " + instr);
             instr_count++;
-            String next_instr = scanner.nextLine();
+            scanner.nextLine();
           }
         }
       }
+
+      System.out.println("You're finished! Press any key to continue.");
+      scanner.nextLine();
+      System.out.print("\033[H\033[2J");
+      System.out.flush();
     }
   }
 }

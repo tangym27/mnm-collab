@@ -18,5 +18,5 @@ public class Recipe {
     this.number = number;
   }
 
-  public String toString() { return number + ". " + name; }
+  public String toString() { return number + " - " + name; }
 }
