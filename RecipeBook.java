@@ -56,7 +56,7 @@ public class RecipeBook {
 
           if (bookClone.isEmpty() == true) {
             System.out.println("-----------------------------------------");
-            System.out.println("No matches found. Press any key to return home.");
+            System.out.println("No matches found. Enter any key to return home.");
             scanner.nextLine();
             System.out.print("\033[H\033[2J");
             System.out.flush();
@@ -167,7 +167,7 @@ public class RecipeBook {
         System.out.println();
         System.out.println("The recipe " + name + " has been added!");
         System.out.println();
-        System.out.print("Press any key to continue: ");
+        System.out.print("Enter any key to continue: ");
         scanner.nextLine();
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -224,7 +224,7 @@ public class RecipeBook {
     System.out.println("-----------------------------------------------");
     System.out.println("Choose how you would like to view the recipe:");
     System.out.println("0 - View the recipe in its' entirety");
-    System.out.println("1 -  View the recipe's instructions step-by-step");
+    System.out.println("1 - View the recipe's instructions step-by-step");
     System.out.println("-----------------------------------------------");
     System.out.print("Enter your viewing choice: ");
     int view_choice = Integer.parseInt(scanner.nextLine());
@@ -247,7 +247,7 @@ public class RecipeBook {
         }
       }
       System.out.println();
-      System.out.print("Press any key to continue: ");
+      System.out.print("Enter any key to continue: ");
       scanner.nextLine();
       System.out.print("\033[H\033[2J");
       System.out.flush();
@@ -260,7 +260,7 @@ public class RecipeBook {
       System.out.println("Viewing recipe: " + name);
       System.out.println("-----------------------------------------------");
 
-      System.out.println("Instructions: (Press any key to continue)");
+      System.out.println("Instructions: (Enter any key to continue)");
       for (Recipe x : book) {
         if (name.equalsIgnoreCase(x.name)) {
           int instr_count = 1;
@@ -272,7 +272,7 @@ public class RecipeBook {
         }
       }
 
-      System.out.println("You're finished! Press any key to continue.");
+      System.out.println("You're finished! Enter any key to continue.");
       scanner.nextLine();
       System.out.print("\033[H\033[2J");
       System.out.flush();
