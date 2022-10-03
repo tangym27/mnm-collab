@@ -1,4 +1,5 @@
 import java.util.*;
+
 public class RecipeBook {
 
   private static ArrayList<Recipe> book = new ArrayList<>();
@@ -70,7 +71,7 @@ public class RecipeBook {
 
           // User declines view
           else if (recipeDetails.equalsIgnoreCase("N") ||
-                   recipeDetails.equalsIgnoreCase("No")) {
+              recipeDetails.equalsIgnoreCase("No")) {
             System.out.print("\033[H\033[2J");
             System.out.flush();
           }
@@ -90,8 +91,7 @@ public class RecipeBook {
         }
 
         else {
-          System.out.println(
-              "That is not a valid option, please try again.\n");
+          System.out.println("That is not a valid option, please try again.\n");
         }
       }
 
@@ -101,9 +101,9 @@ public class RecipeBook {
     }
   }
 
+  // Add Recipe
   public static void addRecipe() {
     try {
-
       System.out.println("Adding a recipe!\n");
       System.out.print("Enter the recipe name (ex: 'Cake'): ");
       String name = scanner.nextLine();
@@ -112,17 +112,22 @@ public class RecipeBook {
       System.out.print(
           "Enter the ingredients using commas (ex: 'eggs, chocolate'): ");
       String ingredients = scanner.nextLine();
+
       System.out.print(
           "Enter the instructions using commas (ex: 'Mix the eggs, Bake at 350, Enjoy'): ");
       String[] instructionsArray = scanner.nextLine().split(",");
       int current_num = 1;
+
       for (Recipe x : book) {
         if (x.number > current_num) {
           current_num = x.number;
         }
       }
+
       Recipe r = new Recipe(name, description, ingredients, instructionsArray,
-                            (current_num + 1));
+          (current_num + 1));
+
+      // Book successfully added
       if (book.add(r)) {
         System.out.println();
         System.out.println("The recipe " + name + " has been added!");
@@ -131,7 +136,10 @@ public class RecipeBook {
         scanner.nextLine();
         System.out.print("\033[H\033[2J");
         System.out.flush();
-      } else {
+      }
+
+      // Book not added
+      else {
         System.out.println("Issue adding recipe. Please try again later.");
       }
     } catch (Exception e) {
@@ -139,29 +147,27 @@ public class RecipeBook {
     }
   }
 
+  // Test REcipes
   private static void preloadedRecipes() {
     String[] instructions = new String[] {
         "Cook spaghetti in boiling water", "melt butter in medium frying pan",
         "add black pepper to butter", "drain pasta but keep some pasta water",
-        "add pasta and pasta water to pan with butter and pepper"};
-    String[] instructions2 =
-        new String[] {"Mix the stuff2", "Live, laugh, and love", "Enjoy"};
-    String[] instructions3 =
-        new String[] {"Mix the stuff3", "Live, laugh, and love", "Enjoy"};
+        "add pasta and pasta water to pan with butter and pepper" };
+    String[] instructions2 = new String[] { "Mix the stuff2", "Live, laugh, and love", "Enjoy" };
+    String[] instructions3 = new String[] { "Mix the stuff3", "Live, laugh, and love", "Enjoy" };
 
     Recipe r = new Recipe(
         "Cacio e pepe", "butter and pepper spaghetti dish",
         "spaghetti, butter, ground black pepper, grated pecorino or parmesan",
         instructions, 1);
     book.add(r);
-    Recipe r2 =
-        new Recipe("Cake 2", "Ice Cream", "eggs2, butter2", instructions2, 2);
+    Recipe r2 = new Recipe("Cake 2", "Ice Cream", "eggs2, butter2", instructions2, 2);
     book.add(r2);
-    Recipe r3 =
-        new Recipe("Cake 3", "Mochi", "eggs3, butter3", instructions3, 3);
+    Recipe r3 = new Recipe("Cake 3", "Mochi", "eggs3, butter3", instructions3, 3);
     book.add(r3);
   }
 
+  // List Recipes
   private static void showAll() {
     System.out.println("-----------------------------------------");
 
@@ -173,6 +179,7 @@ public class RecipeBook {
     System.out.println("-----------------------------------------\n");
   }
 
+  // Display Recipe Info
   private static void showRecipeInfo(String name) {
     System.out.println();
     System.out.println("-----------------------------------------------");
@@ -184,6 +191,7 @@ public class RecipeBook {
     int view_choice = Integer.parseInt(scanner.nextLine());
     System.out.println("-----------------------------------------------");
 
+    // User Views Recipe
     if (view_choice == 0) {
       for (Recipe x : book) {
         if (name.equalsIgnoreCase(x.name)) {
@@ -206,14 +214,14 @@ public class RecipeBook {
       System.out.flush();
     }
 
+    // User Views Recipe Instructions
     else if (view_choice == 1) {
       System.out.print("\033[H\033[2J");
       System.out.flush();
       System.out.println("Viewing recipe: " + name);
       System.out.println("-----------------------------------------------");
 
-      System.out.println(
-          "Instructions: (Press any key to continue)");
+      System.out.println("Instructions: (Press any key to continue)");
       for (Recipe x : book) {
         if (name.equalsIgnoreCase(x.name)) {
           int instr_count = 1;
