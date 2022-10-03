@@ -42,8 +42,43 @@ public class RecipeBook {
         // TODO: Search for a recipe
         else if (val == 2) {
           // ask user if they want to view recipe info
-          System.out.println("What would like to search for?");
+          System.out.print(
+              "Enter the name of the recipe you would like to search for: ");
           String recipeDetails = scanner.nextLine();
+          System.out.println();
+
+          ArrayList<Recipe> bookClone = new ArrayList<Recipe>();
+          for (Recipe recipe : book) {
+            if (recipe.name.matches("(?i)(" + recipeDetails + ").*")) {
+              bookClone.add(recipe);
+            }
+          }
+
+          if (bookClone.isEmpty() == true) {
+            System.out.println("-----------------------------------------");
+            System.out.println("No matches found. Press any key to return home.");
+            scanner.nextLine();
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+          } else {
+            System.out.println("-----------------------------------------");
+            System.out.println("Matches found! Enter the corresponding recipe number.");
+
+            for (Recipe x : bookClone) {
+              System.out.println(x);
+            }
+
+            String userChoice = scanner.nextLine();
+            
+            for (Recipe x : book) {
+              if (x.number == Integer.parseInt(userChoice)) {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+                System.out.println("Viewing recipe: " + x.name);
+                showRecipeInfo(x.name);
+              }
+            }
+          }   
         }
 
         // View all recipes
@@ -71,7 +106,7 @@ public class RecipeBook {
 
           // User declines view
           else if (recipeDetails.equalsIgnoreCase("N") ||
-              recipeDetails.equalsIgnoreCase("No")) {
+                   recipeDetails.equalsIgnoreCase("No")) {
             System.out.print("\033[H\033[2J");
             System.out.flush();
           }
@@ -125,7 +160,7 @@ public class RecipeBook {
       }
 
       Recipe r = new Recipe(name, description, ingredients, instructionsArray,
-          (current_num + 1));
+                            (current_num + 1));
 
       // Book successfully added
       if (book.add(r)) {
@@ -147,23 +182,27 @@ public class RecipeBook {
     }
   }
 
-  // Test REcipes
+  // Test Recipes
   private static void preloadedRecipes() {
     String[] instructions = new String[] {
         "Cook spaghetti in boiling water", "melt butter in medium frying pan",
         "add black pepper to butter", "drain pasta but keep some pasta water",
-        "add pasta and pasta water to pan with butter and pepper" };
-    String[] instructions2 = new String[] { "Mix the stuff2", "Live, laugh, and love", "Enjoy" };
-    String[] instructions3 = new String[] { "Mix the stuff3", "Live, laugh, and love", "Enjoy" };
+        "add pasta and pasta water to pan with butter and pepper"};
+    String[] instructions2 =
+        new String[] {"Mix the stuff2", "Live, laugh, and love", "Enjoy"};
+    String[] instructions3 =
+        new String[] {"Mix the stuff3", "Live, laugh, and love", "Enjoy"};
 
     Recipe r = new Recipe(
         "Cacio e pepe", "butter and pepper spaghetti dish",
         "spaghetti, butter, ground black pepper, grated pecorino or parmesan",
         instructions, 1);
     book.add(r);
-    Recipe r2 = new Recipe("Cake 2", "Ice Cream", "eggs2, butter2", instructions2, 2);
+    Recipe r2 =
+        new Recipe("Cake 2", "Ice Cream", "eggs2, butter2", instructions2, 2);
     book.add(r2);
-    Recipe r3 = new Recipe("Cake 3", "Mochi", "eggs3, butter3", instructions3, 3);
+    Recipe r3 =
+        new Recipe("Cake 3", "Mochi", "eggs3, butter3", instructions3, 3);
     book.add(r3);
   }
 
