@@ -126,11 +126,17 @@ public class RecipeBook {
         }
 
         else {
+          System.out.print("\033[H\033[2J");
+          System.out.flush();
+          System.out.println();
           System.out.println("That is not a valid option, please try again.\n");
         }
       }
 
       catch (Exception e) {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+        System.out.println();
         System.out.println("That is not a valid option, please try again.\n");
       }
     }
