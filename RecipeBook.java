@@ -48,6 +48,7 @@ public class RecipeBook {
           String recipeDetails = scanner.nextLine();
           System.out.println();
 
+          // Create temporary storage to store matches
           ArrayList<Recipe> bookClone = new ArrayList<Recipe>();
           for (Recipe recipe : book) {
             if (recipe.name.matches("(?i)(" + recipeDetails + ").*")) {
@@ -55,13 +56,14 @@ public class RecipeBook {
             }
           }
 
+          // No matches found
           if (bookClone.isEmpty() == true) {
             System.out.println("-----------------------------------------------");
             System.out.println("No matches found. Enter any key to return home.");
             scanner.nextLine();
             System.out.print("\033[H\033[2J");
             System.out.flush();
-          } 
+          }
           else {
             System.out.println("-----------------------------------------------");
             System.out.println("Matches found!");
@@ -71,7 +73,7 @@ public class RecipeBook {
             }
             System.out.println("-----------------------------------------------");
             System.out.println("Please enter the recipe number of your choice: ");
-            String userChoice = scanner.nextLine(); 
+            String userChoice = scanner.nextLine();
 
             // give user options to view detials or edit recipe
             System.out.println("");
@@ -82,7 +84,7 @@ public class RecipeBook {
             System.out.println("3 - Exit");
             System.out.println("-----------------------------------------------");
             System.out.print("Enter a number: ");
-          
+
 
             int view_edit = Integer.parseInt(scanner.nextLine());
             // if user wants to view details
@@ -93,10 +95,10 @@ public class RecipeBook {
                 System.out.flush();
                 System.out.println("Viewing recipe: " + x.name);
                 showRecipeInfo(x.name);
-                } 
+                }
               }
             }
-            // if user wants to edit details 
+            // if user wants to edit details
             else if (view_edit == 2) {
               for (Recipe x : book) {
                 if (x.number == Integer.parseInt(userChoice)){
@@ -122,7 +124,7 @@ public class RecipeBook {
                   else {
                     new_description = x.description;
                   }
-                  // edit ingredients 
+                  // edit ingredients
                   System.out.println("Would you like to edit the recipe's ingredients? (Y/N) ");
                   recipeEdit = scanner.nextLine();
                   String new_ingredients;
@@ -177,19 +179,19 @@ public class RecipeBook {
                     "That is not a valid option, returning to home.");
               }
 
-            
+
               }
               }
-            
-          
-        
+
+
+
 
         // View all recipes
         else if (val == 3) {
           showAll();
           System.out.println("-----------------------------------------------");
           System.out.println("Please enter the recipe number of your choice or enter 0 to exit: ");
-          String userChoice = scanner.nextLine(); 
+          String userChoice = scanner.nextLine();
 
           if (Integer.parseInt(userChoice) == 0){
             System.out.print("\033[H\033[2J");
@@ -214,10 +216,10 @@ public class RecipeBook {
               System.out.flush();
               System.out.println("Viewing recipe: " + x.name);
               showRecipeInfo(x.name);
-              } 
+              }
             }
           }
-          // if user wants to edit details 
+          // if user wants to edit details
           else if (view_edit == 2) {
             for (Recipe x : book) {
               if (x.number == Integer.parseInt(userChoice)){
@@ -245,7 +247,7 @@ public class RecipeBook {
                 else {
                   new_description = x.description;
                 }
-                // edit ingredients 
+                // edit ingredients
                 System.out.println("-----------------------------------------------");
                 System.out.println("Would you like to edit the recipe's ingredients? (Y/N) ");
                 recipeEdit = scanner.nextLine();
@@ -382,21 +384,34 @@ public class RecipeBook {
         "Cook spaghetti in boiling water", "melt butter in medium frying pan",
         "add black pepper to butter", "drain pasta but keep some pasta water",
         "add pasta and pasta water to pan with butter and pepper"};
-    String[] instructions2 =
-        new String[] {"Mix the stuff2", "Live, laugh, and love", "Enjoy"};
-    String[] instructions3 =
-        new String[] {"Mix the stuff3", "Live, laugh, and love", "Enjoy"};
+    String[] instructions2 = new String[] {
+        "Bring 300ml of water to a boil",
+        "Mix egg, kewpie mayo, ramen flavor packets in a bowl (this is called 'tare') ",
+        "Drop noodle pack into pot and stir for 3 minutes",
+        "Drain water into bowl and mix in the 'tare'",
+        "Put noodles into bowl and stir well", "Let sit until warm and Enjoy!"};
+    String[] instructions3 = new String[] {
+        "Preheat oven to 350°F. Grease an 8x8 square pan or line with foil and set aside.",
+        "In a medium bowl combine melted butter and cocoa and sugar stir until fully dissolved.",
+        "Add eggs one at a time then vanilla and stir until well combined.",
+        "Stir in flour and salt until the flour is fully combine. Be careful not to overmix mix.",
+        "(optional) fold in 1 cup of nuts, raisins, chocolate chips or anything you desire.",
+        "Spread in pan and bake for approximately 20-22 minutes or until the center is slightly set.  Be careful not to over-bake!",
+        "Cool completely then cut into 9 large squares or 16 small squares ( I cut mine into 16)"};
 
     Recipe r = new Recipe(
         "Cacio e pepe", "butter and pepper spaghetti dish",
         "spaghetti, butter, ground black pepper, grated pecorino or parmesan",
         instructions, 1);
     book.add(r);
-    Recipe r2 =
-        new Recipe("Cake 2", "Ice Cream", "eggs2, butter2", instructions2, 2);
+    Recipe r2 = new Recipe("Instant Ramen Hack", "easy ramen for fun!",
+                           "Ichiban Miso Ramen Pack x1, Kewpie Mayo x1, Egg x1",
+                           instructions2, 2);
     book.add(r2);
-    Recipe r3 =
-        new Recipe("Cake 3", "Mochi", "eggs3, butter3", instructions3, 3);
+    Recipe r3 = new Recipe(
+        "Brownies", "Easy brownies!",
+        "1/2 cup melted butter, 1/2 cup unsweetened cocoa, 1 cup sugar, 2 large eggs, 1 teaspoon vanilla, 1/2 cup flour, 1/4 tsp salt",
+        instructions3, 3);
     book.add(r3);
   }
 
