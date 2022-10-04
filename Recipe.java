@@ -7,13 +7,13 @@ public class Recipe {
 
   public Recipe() {}
 
-  public Recipe(String name, String description, String ingredients,
-                String[] instructions, Integer number) {
+  public Recipe(Integer number, String name, String description,
+                String ingredients, String[] instructions) {
+    this.number = number;
     this.name = name;
     this.description = description;
     this.ingredients = ingredients;
     this.instructions = instructions;
-    this.number = number;
   }
 
   public String toString() { return number + " - " + name; }

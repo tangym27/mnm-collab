@@ -1,4 +1,9 @@
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class RecipeBook {
 
@@ -21,8 +26,28 @@ public class RecipeBook {
     System.out.println("-----------------------------------------------");
     System.out.println("Welcome to your recipe book!");
 
+    // Check for recipes.txt
+    try {
+      File f = new File("recipes.txt");
+
+      // File not found
+      if (f.createNewFile()) {
+        System.out.println("No file found.");
+        System.out.println("Creating recipes.txt...");
+      }
+
+      // File found, load
+      else {
+        System.out.println("File found! Recipes loaded.");
+        loadRecipes(f);
+      }
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+
     // TODO: REMOVE THIS - USED FOR DEBUG/TESTING (Preloaded Recipes)
-    preloadedRecipes();
+    // preloadedRecipes();
 
     while (true) {
       printIntro();
@@ -64,6 +89,8 @@ public class RecipeBook {
             System.out.print("\033[H\033[2J");
             System.out.flush();
           }
+
+          // Matches found
           else {
             System.out.println("-----------------------------------------------");
             System.out.println("Matches found!");
@@ -355,8 +382,8 @@ public class RecipeBook {
         }
       }
 
-      Recipe r = new Recipe(name, description, ingredients, instructionsArray,
-                            (current_num + 1));
+      Recipe r = new Recipe((current_num + 1), name, description, ingredients,
+                            instructionsArray);
 
       // Book successfully added
       if (book.add(r)) {
@@ -379,41 +406,41 @@ public class RecipeBook {
   }
 
   // Test Recipes
-  private static void preloadedRecipes() {
-    String[] instructions = new String[] {
-        "Cook spaghetti in boiling water", "melt butter in medium frying pan",
-        "add black pepper to butter", "drain pasta but keep some pasta water",
-        "add pasta and pasta water to pan with butter and pepper"};
-    String[] instructions2 = new String[] {
-        "Bring 300ml of water to a boil",
-        "Mix egg, kewpie mayo, ramen flavor packets in a bowl (this is called 'tare') ",
-        "Drop noodle pack into pot and stir for 3 minutes",
-        "Drain water into bowl and mix in the 'tare'",
-        "Put noodles into bowl and stir well", "Let sit until warm and Enjoy!"};
-    String[] instructions3 = new String[] {
-        "Preheat oven to 350°F. Grease an 8x8 square pan or line with foil and set aside.",
-        "In a medium bowl combine melted butter and cocoa and sugar stir until fully dissolved.",
-        "Add eggs one at a time then vanilla and stir until well combined.",
-        "Stir in flour and salt until the flour is fully combine. Be careful not to overmix mix.",
-        "(optional) fold in 1 cup of nuts, raisins, chocolate chips or anything you desire.",
-        "Spread in pan and bake for approximately 20-22 minutes or until the center is slightly set.  Be careful not to over-bake!",
-        "Cool completely then cut into 9 large squares or 16 small squares ( I cut mine into 16)"};
+  // private static void preloadedRecipes() {
+  //   String[] instructions = new String[] {
+  //       "Cook spaghetti in boiling water", "melt butter in medium frying pan",
+  //       "add black pepper to butter", "drain pasta but keep some pasta water",
+  //       "add pasta and pasta water to pan with butter and pepper"};
+  //   String[] instructions2 = new String[] {
+  //       "Bring 300ml of water to a boil",
+  //       "Mix egg, kewpie mayo, ramen flavor packets in a bowl (this is called 'tare') ",
+  //       "Drop noodle pack into pot and stir for 3 minutes",
+  //       "Drain water into bowl and mix in the 'tare'",
+  //       "Put noodles into bowl and stir well", "Let sit until warm and Enjoy!"};
+  //   String[] instructions3 = new String[] {
+  //       "Preheat oven to 350°F. Grease an 8x8 square pan or line with foil and set aside.",
+  //       "In a medium bowl combine melted butter and cocoa and sugar stir until fully dissolved.",
+  //       "Add eggs one at a time then vanilla and stir until well combined.",
+  //       "Stir in flour and salt until the flour is fully combine. Be careful not to overmix mix.",
+  //       "(optional) fold in 1 cup of nuts, raisins, chocolate chips or anything you desire.",
+  //       "Spread in pan and bake for approximately 20-22 minutes or until the center is slightly set.  Be careful not to over-bake!",
+  //       "Cool completely then cut into 9 large squares or 16 small squares ( I cut mine into 16)"};
 
-    Recipe r = new Recipe(
-        "Cacio e pepe", "butter and pepper spaghetti dish",
-        "spaghetti, butter, ground black pepper, grated pecorino or parmesan",
-        instructions, 1);
-    book.add(r);
-    Recipe r2 = new Recipe("Instant Ramen Hack", "easy ramen for fun!",
-                           "Ichiban Miso Ramen Pack x1, Kewpie Mayo x1, Egg x1",
-                           instructions2, 2);
-    book.add(r2);
-    Recipe r3 = new Recipe(
-        "Brownies", "Easy brownies!",
-        "1/2 cup melted butter, 1/2 cup unsweetened cocoa, 1 cup sugar, 2 large eggs, 1 teaspoon vanilla, 1/2 cup flour, 1/4 tsp salt",
-        instructions3, 3);
-    book.add(r3);
-  }
+  //   Recipe r = new Recipe(
+  //       1, "Cacio e pepe", "butter and pepper spaghetti dish",
+  //       "spaghetti, butter, ground black pepper, grated pecorino or parmesan",
+  //       instructions);
+  //   book.add(r);
+  //   Recipe r2 = new Recipe(2, "Instant Ramen Hack", "easy ramen for fun!",
+  //                          "Ichiban Miso Ramen Pack x1, Kewpie Mayo x1, Egg x1",
+  //                          instructions2);
+  //   book.add(r2);
+  //   Recipe r3 = new Recipe(
+  //       3, "Brownies", "Easy brownies!",
+  //       "1/2 cup melted butter, 1/2 cup unsweetened cocoa, 1 cup sugar, 2 large eggs, 1 teaspoon vanilla, 1/2 cup flour, 1/4 tsp salt",
+  //       instructions3);
+  //   book.add(r3);
+  // }
 
   // List Recipes
   private static void showAll() {
@@ -489,6 +516,28 @@ public class RecipeBook {
     else {
       System.out.println("That is not a valid option, please try again. Defaulting to menu.");
 
+    }
+  }
+
+  // Load recipes from file
+  private static void loadRecipes(File f) {
+    try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+      String line;
+
+      String[] temp;
+      String[] instructions;
+      while ((line = br.readLine()) != null) {
+        temp = line.split(";");
+        instructions = temp[4].split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+        Recipe r = new Recipe(Integer.parseInt(temp[0]), temp[1], temp[2],
+                              temp[3], instructions);
+        book.add(r);
+      }
+
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 }
