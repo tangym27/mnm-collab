@@ -6,18 +6,19 @@ public class RecipeBook {
   private static Scanner scanner = new Scanner(System.in);
 
   public static void printIntro() {
-    System.out.println("-----------------------------------------");
+    System.out.println("-----------------------------------------------");
     System.out.println("What would you like to do?");
     System.out.println("1 - Add a recipe");
     System.out.println("2 - Search for a recipe");
     System.out.println("3 - View all recipes");
-    System.out.println("4 - Exit");
-    System.out.println("-----------------------------------------\n");
+    System.out.println("4 - I'm feeling hungry!");
+    System.out.println("5 - Exit");
+    System.out.println("-----------------------------------------------\n");
     System.out.print("Enter a number: ");
   }
 
   public static void main(String[] args) {
-    System.out.println("-----------------------------------------");
+    System.out.println("-----------------------------------------------");
     System.out.println("Welcome to your recipe book!");
 
     // TODO: REMOVE THIS - USED FOR DEBUG/TESTING (Preloaded Recipes)
@@ -55,13 +56,13 @@ public class RecipeBook {
           }
 
           if (bookClone.isEmpty() == true) {
-            System.out.println("-----------------------------------------");
+            System.out.println("-----------------------------------------------");
             System.out.println("No matches found. Enter any key to return home.");
             scanner.nextLine();
             System.out.print("\033[H\033[2J");
             System.out.flush();
           } else {
-            System.out.println("-----------------------------------------");
+            System.out.println("-----------------------------------------------");
             System.out.println("Matches found! Enter the corresponding recipe number.");
 
             for (Recipe x : bookClone) {
@@ -69,7 +70,7 @@ public class RecipeBook {
             }
 
             String userChoice = scanner.nextLine();
-            
+
             for (Recipe x : book) {
               if (x.number == Integer.parseInt(userChoice)) {
                 System.out.print("\033[H\033[2J");
@@ -78,7 +79,7 @@ public class RecipeBook {
                 showRecipeInfo(x.name);
               }
             }
-          }   
+          }
         }
 
         // View all recipes
@@ -120,8 +121,19 @@ public class RecipeBook {
           }
         }
 
-        // Exit
+        // Random number
         else if (val == 4) {
+          int rand = (int) Math.floor(Math.random()* book.size());
+          Recipe x = book.get(rand);
+          System.out.print("\033[H\033[2J");
+          System.out.flush();
+          System.out.println("Viewing recipe: " + x.name);
+          showRecipeInfo(x.name);
+
+        }
+
+        // Exit
+        else if (val == 5){
           System.exit(0);
         }
 
@@ -214,14 +226,14 @@ public class RecipeBook {
 
   // List Recipes
   private static void showAll() {
-    System.out.println("-----------------------------------------");
+    System.out.println("-----------------------------------------------");
 
     System.out.println("Recipes: ");
     for (Recipe x : book) {
       System.out.println(x);
     }
 
-    System.out.println("-----------------------------------------\n");
+    System.out.println("-----------------------------------------------\n");
   }
 
   // Display Recipe Info
@@ -282,6 +294,10 @@ public class RecipeBook {
       scanner.nextLine();
       System.out.print("\033[H\033[2J");
       System.out.flush();
+    }
+    else {
+      System.out.println("That is not a valid option, please try again. Defaulting to menu.");
+
     }
   }
 }
