@@ -61,64 +61,240 @@ public class RecipeBook {
             scanner.nextLine();
             System.out.print("\033[H\033[2J");
             System.out.flush();
-          } else {
+          } 
+          else {
             System.out.println("-----------------------------------------------");
-            System.out.println("Matches found! Enter the corresponding recipe number.");
+            System.out.println("Matches found!");
 
             for (Recipe x : bookClone) {
               System.out.println(x);
             }
+            System.out.println("-----------------------------------------------");
+            System.out.println("Please enter the recipe number of your choice: ");
+            String userChoice = scanner.nextLine(); 
 
-            String userChoice = scanner.nextLine();
+            // give user options to view detials or edit recipe
+            System.out.println("");
+            System.out.println("-----------------------------------------------");
+            System.out.println("What would you like to do?");
+            System.out.println("1 - View recipe details");
+            System.out.println("2 - Edit the recipe");
+            System.out.println("3 - Exit");
+            System.out.println("-----------------------------------------------");
+            System.out.print("Enter a number: ");
+          
 
-            for (Recipe x : book) {
+            int view_edit = Integer.parseInt(scanner.nextLine());
+            // if user wants to view details
+            if (view_edit == 1) {
+              for (Recipe x : book) {
               if (x.number == Integer.parseInt(userChoice)) {
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
                 System.out.println("Viewing recipe: " + x.name);
                 showRecipeInfo(x.name);
+                } 
               }
             }
-          }
-        }
+            // if user wants to edit details 
+            else if (view_edit == 2) {
+              for (Recipe x : book) {
+                if (x.number == Integer.parseInt(userChoice)){
+                  // edit name
+                  System.out.println("Would you like to edit the recipe's name? (Y/N) ");
+                  String recipeEdit = scanner.nextLine();
+                  String new_name;
+                  if (recipeEdit.equalsIgnoreCase("Y") || recipeEdit.equalsIgnoreCase("Yes")) {
+                    System.out.println("Please enter the new name: ");
+                    new_name = scanner.nextLine();
+                  }
+                  else {
+                    new_name = x.name;
+                  }
+                  // edit description
+                  System.out.println("Would you like to edit the recipe's description? (Y/N) ");
+                  recipeEdit = scanner.nextLine();
+                  String new_description;
+                  if (recipeEdit.equalsIgnoreCase("Y") || recipeEdit.equalsIgnoreCase("Yes")) {
+                    System.out.println("Please enter the new description: ");
+                    new_description = scanner.nextLine();
+                  }
+                  else {
+                    new_description = x.description;
+                  }
+                  // edit ingredients 
+                  System.out.println("Would you like to edit the recipe's ingredients? (Y/N) ");
+                  recipeEdit = scanner.nextLine();
+                  String new_ingredients;
+                  if (recipeEdit.equalsIgnoreCase("Y") || recipeEdit.equalsIgnoreCase("Yes")) {
+                    System.out.println("Please enter the new ingredients using commas (ex: 'eggs, chocolate'): ");
+                    new_ingredients = scanner.nextLine();
+                  }
+                  else {
+                    new_ingredients = x.ingredients;
+                  }
+
+                  // edit instructions
+                  System.out.println("Would you like to edit the recipe's instructions? (Y/N) ");
+                  recipeEdit = scanner.nextLine();
+                  String[] new_instructionsArray;
+                  if (recipeEdit.equalsIgnoreCase("Y") || recipeEdit.equalsIgnoreCase("Yes")) {
+                    System.out.println("Enter the instructions using commas (ex: 'Mix the eggs, Bake at 350, Enjoy'): ");
+                    new_instructionsArray = scanner.nextLine().split(",");
+                  }
+                  else {
+                    new_instructionsArray = new String [x.instructions.length];
+                    for (int i = 0; i < x.instructions.length; i++) {
+                      new_instructionsArray[i] = x.instructions[i];
+                    }
+                  }
+
+                  Recipe edited_r = new Recipe(new_name, new_description, new_ingredients, new_instructionsArray, x.number);
+
+                  book.set((x.number - 1), edited_r);
+                  System.out.println("-----------------------------------------------");
+                  System.out.println("The recipe " + new_name + " has been edited!");
+                  System.out.println();
+                  System.out.print("Enter any key to continue: ");
+                  scanner.nextLine();
+                  System.out.print("\033[H\033[2J");
+                  System.out.flush();
+                  }
+
+                }
+              }
+
+              else if (view_edit == 3){
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+              }
+
+
+              else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+                System.out.println(
+                    "That is not a valid option, returning to home.");
+              }
+
+            
+              }
+              }
+            
+          
+        
 
         // View all recipes
         else if (val == 3) {
           showAll();
-          System.out.print("Would you like to view a recipe's details? (Y/N) ");
-          String recipeDetails = scanner.nextLine();
-          System.out.println();
+          System.out.println("-----------------------------------------------");
+          System.out.println("Please enter the recipe number of your choice or enter 0 to exit: ");
+          String userChoice = scanner.nextLine(); 
 
-          // User accepts view
-          if (recipeDetails.equalsIgnoreCase("Y") ||
-              recipeDetails.equalsIgnoreCase("Yes")) {
-            System.out.print("Enter the recipe's corresponding number: ");
-            int rec_num = Integer.parseInt(scanner.nextLine());
+          if (Integer.parseInt(userChoice) == 0){
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+          }
 
+          System.out.println("");
+          System.out.println("-----------------------------------------------");
+          System.out.println("What would you like to do?");
+          System.out.println("1 - View recipe details");
+          System.out.println("2 - Edit the recipe");
+          System.out.println("3 - Exit");
+          System.out.println("-----------------------------------------------");
+          System.out.print("Enter a number: ");
+
+          int view_edit = Integer.parseInt(scanner.nextLine());
+          // if user wants to view details
+          if (view_edit == 1) {
             for (Recipe x : book) {
-              if (x.number == rec_num) {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-                System.out.println("Viewing recipe: " + x.name);
-                showRecipeInfo(x.name);
-              }
+            if (x.number == Integer.parseInt(userChoice)) {
+              System.out.print("\033[H\033[2J");
+              System.out.flush();
+              System.out.println("Viewing recipe: " + x.name);
+              showRecipeInfo(x.name);
+              } 
             }
           }
+          // if user wants to edit details 
+          else if (view_edit == 2) {
+            for (Recipe x : book) {
+              if (x.number == Integer.parseInt(userChoice)){
+                // edit name
+                System.out.println("-----------------------------------------------");
+                System.out.println("Would you like to edit the recipe's name? (Y/N) ");
+                String recipeEdit = scanner.nextLine();
+                String new_name;
+                if (recipeEdit.equalsIgnoreCase("Y") || recipeEdit.equalsIgnoreCase("Yes")) {
+                  System.out.println("Please enter the new name: ");
+                  new_name = scanner.nextLine();
+                }
+                else {
+                  new_name = x.name;
+                }
+                // edit description
+                System.out.println("-----------------------------------------------");
+                System.out.println("Would you like to edit the recipe's description? (Y/N) ");
+                recipeEdit = scanner.nextLine();
+                String new_description;
+                if (recipeEdit.equalsIgnoreCase("Y") || recipeEdit.equalsIgnoreCase("Yes")) {
+                  System.out.println("Please enter the new description: ");
+                  new_description = scanner.nextLine();
+                }
+                else {
+                  new_description = x.description;
+                }
+                // edit ingredients 
+                System.out.println("-----------------------------------------------");
+                System.out.println("Would you like to edit the recipe's ingredients? (Y/N) ");
+                recipeEdit = scanner.nextLine();
+                String new_ingredients;
+                if (recipeEdit.equalsIgnoreCase("Y") || recipeEdit.equalsIgnoreCase("Yes")) {
+                  System.out.println("Please enter the new ingredients using commas (ex: 'eggs, chocolate'): ");
+                  new_ingredients = scanner.nextLine();
+                }
+                else {
+                  new_ingredients = x.ingredients;
+                }
 
-          // User declines view
-          else if (recipeDetails.equalsIgnoreCase("N") ||
-                   recipeDetails.equalsIgnoreCase("No")) {
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
-          }
+                // edit instructions
+                System.out.println("-----------------------------------------------");
+                System.out.println("Would you like to edit the recipe's instructions? (Y/N) ");
+                recipeEdit = scanner.nextLine();
+                String[] new_instructionsArray;
+                if (recipeEdit.equalsIgnoreCase("Y") || recipeEdit.equalsIgnoreCase("Yes")) {
+                  System.out.println("Enter the instructions using commas (ex: 'Mix the eggs, Bake at 350, Enjoy'): ");
+                  new_instructionsArray = scanner.nextLine().split(",");
+                }
+                else {
+                  new_instructionsArray = new String [x.instructions.length];
+                  for (int i = 0; i < x.instructions.length; i++) {
+                    new_instructionsArray[i] = x.instructions[i];
+                  }
+                }
 
-          // Return Home
-          else {
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
-            System.out.println(
-                "That is not a valid option, returning to home.");
-          }
+                Recipe edited_r = new Recipe(new_name, new_description, new_ingredients, new_instructionsArray, x.number);
+
+                book.set((x.number - 1), edited_r);
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+                }
+              }
+            }
+
+            else if (view_edit == 3){
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+
+            // Return Home
+            else {
+              System.out.print("\033[H\033[2J");
+              System.out.flush();
+              System.out.println(
+                  "That is not a valid option, returning to home.");
+            }
         }
 
         // Random number
