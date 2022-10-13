@@ -63,8 +63,9 @@ public class RecipeBook {
           if (Integer.parseInt(userChoice) == 0){
             System.out.print("\033[H\033[2J");
             System.out.flush();
+          } else {
+            editRecipe(userChoice);
           }
-          editRecipe(userChoice);
         }
 
         // Choice 4: Random recipe
@@ -211,16 +212,17 @@ public class RecipeBook {
     System.out.println("-----------------------------------------------");
     System.out.print("Enter a number: ");
 
-
+    boolean found = false;
     int view_edit = Integer.parseInt(scanner.nextLine());
     // if user wants to view details
     if (view_edit == 1) {
       for (Recipe x : book) {
-      if (x.number == Integer.parseInt(userChoice)) {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-        System.out.println("Viewing recipe: " + x.name);
-        showRecipeInfo(x.name);
+        if (x.number == Integer.parseInt(userChoice)) {
+          System.out.print("\033[H\033[2J");
+          System.out.flush();
+          System.out.println("Viewing recipe: " + x.name);
+          showRecipeInfo(x.name);
+          found = true;
         }
       }
     }
@@ -228,6 +230,7 @@ public class RecipeBook {
     else if (view_edit == 2) {
       for (Recipe x : book) {
         if (x.number == Integer.parseInt(userChoice)){
+          found = true;
           // edit name
           System.out.println("Would you like to edit the recipe's name? (Y/N) ");
           String recipeEdit = scanner.nextLine();
@@ -293,6 +296,7 @@ public class RecipeBook {
       }
 
       else if (view_edit == 3){
+        found = true;
         System.out.print("\033[H\033[2J");
         System.out.flush();
       }
@@ -302,6 +306,13 @@ public class RecipeBook {
         System.out.flush();
         System.out.println(
             "That is not a valid option, returning to home.");
+      }
+
+      if (!found){
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+        System.out.println(
+            "That was not a valid recipe number, returning to home.");
       }
 
   }
