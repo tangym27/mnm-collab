@@ -17,4 +17,9 @@ public class Recipe {
   }
 
   public String toString() { return number + " - " + name; }
+
+  public String toSaveString() {
+    String groupedInstructions = String.join(",", instructions);
+    return String.join(";", number + "", name, description, ingredients, groupedInstructions);
+  }
 }
