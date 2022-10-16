@@ -126,10 +126,26 @@ public class RecipeBook {
       System.out.print(
           "Enter the ingredients using commas (ex: 'eggs, chocolate'): ");
       String ingredients = scanner.nextLine();
+      
+      // Ingredients Empty
+      if (ingredients.isEmpty()) {
+        ingredients = "N/A";
+      }
 
       System.out.print(
           "Enter the instructions using commas (ex: 'Mix the eggs, Bake at 350, Enjoy'): ");
       String[] instructionsArray = scanner.nextLine().split(",");
+
+      int thingCount = 0;
+
+      for (String thing : instructionsArray) {
+        if (thing.isEmpty()) {
+          instructionsArray[thingCount] = "?";
+        }
+
+        thingCount += 1;
+      }
+
       int current_num = 1;
 
       for (Recipe x : book) {
